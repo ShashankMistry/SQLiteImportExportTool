@@ -11,7 +11,7 @@ This library does not use write external storage permission, it writes backup on
 ### Go to Gradle(Module: app) and add
 ```
 dependencies {
-	        implementation 'com.github.ShashankMistry:SQLiteImportExportTool:Tag'
+	        implementation 'com.github.ShashankMistry:SQLiteImportExportTool:1.0.0'
 	}
 ```
 
