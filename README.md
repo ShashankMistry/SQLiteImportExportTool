@@ -8,13 +8,6 @@ This library does not use write external storage permission, it writes backup on
 
 ## How to use?
 
-### Go to Gradle(Module: app) and add
-```
-dependencies {
-	        implementation 'com.github.ShashankMistry:SQLiteImportExportTool:1.0.0'
-	}
-```
-
 ### Go to Gradle(Module: Project) and add
 ```
 allprojects {
@@ -24,6 +17,14 @@ allprojects {
 		}
 	}
 ```
+
+### Go to Gradle(Module: app) and add
+```
+dependencies {
+	        implementation 'com.github.ShashankMistry:SQLiteImportExportTool:1.0.3'
+	}
+```
+
 
 ### To export database
 ```
@@ -51,9 +52,15 @@ databaseImportExport.SQLiteImport(MainActivity.this,IMPORT_CODE));
         }
     }
 ```
-### Listener to import export success or failure events
+
+### Export file directly to external storage
 ```
- databaseImportExport.setExportListener(new DatabaseImportExport.ExportListener() {
+databaseImportExport.directExportToExternal(MainActivity.this, DATABASE_NAME,APP_NAME);
+```
+
+### import, export success or failure event listeners
+```
+ 	databaseImportExport.setExportListener(new DatabaseImportExport.ExportListener() {
             @Override
             public void onExportSuccess(String message) {
                 Toast.makeText(MainActivity.this, "Exported", Toast.LENGTH_SHORT).show();
@@ -74,6 +81,19 @@ databaseImportExport.SQLiteImport(MainActivity.this,IMPORT_CODE));
 
             @Override
             public void onImportFailure(Exception exception) {
+                exception.printStackTrace();
+                Toast.makeText(MainActivity.this, "Error occurred", Toast.LENGTH_SHORT).show();
+            }
+        });
+	
+	 databaseImportExport.setDirectExportListener(new DatabaseImportExport.DirectExportListener() {
+            @Override
+            public void onDirectExportSuccess(String message) {
+                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onDirectExportFailure(Exception exception) {
                 exception.printStackTrace();
                 Toast.makeText(MainActivity.this, "Error occurred", Toast.LENGTH_SHORT).show();
             }
