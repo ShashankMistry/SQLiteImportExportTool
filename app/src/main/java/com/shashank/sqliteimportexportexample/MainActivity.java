@@ -5,11 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shashank.sqliteimportexport.DatabaseImportExport;
+
+import java.io.IOException;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -17,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String DATABASE_NAME = "Chat.db";
     private static final int EXPORT_CODE = 11;
     private static final int IMPORT_CODE = 12;
+    private static final String APP_NAME = "SQLiteExample";
     TextView text;
     DBHelper dbHelper;
     DatabaseImportExport databaseImportExport;
@@ -31,16 +35,24 @@ public class MainActivity extends AppCompatActivity {
         dbHelper.fetchData(text);
         Button export = findViewById(R.id.export);
         Button importDb=  findViewById(R.id.importDb);
+        Button Direct = findViewById(R.id.direct);
         databaseImportExport = new DatabaseImportExport();
 
         export.setOnClickListener(v -> databaseImportExport.SQLiteExport(MainActivity.this,DATABASE_NAME,EXPORT_CODE));
 
         importDb.setOnClickListener(v -> databaseImportExport.SQLiteImport(MainActivity.this,IMPORT_CODE));
 
+        Direct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                databaseImportExport.directExportToExternal(MainActivity.this, DATABASE_NAME,APP_NAME);
+            }
+        });
+
         databaseImportExport.setExportListener(new DatabaseImportExport.ExportListener() {
             @Override
             public void onExportSuccess(String message) {
-                Toast.makeText(MainActivity.this, "Exported", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -53,11 +65,24 @@ public class MainActivity extends AppCompatActivity {
         databaseImportExport.setImportListener(new DatabaseImportExport.ImportListener() {
             @Override
             public void onImportSuccess(String message) {
-                Toast.makeText(MainActivity.this, "imported", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onImportFailure(Exception exception) {
+                exception.printStackTrace();
+                Toast.makeText(MainActivity.this, "Error occurred", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        databaseImportExport.setDirectExportListener(new DatabaseImportExport.DirectExportListener() {
+            @Override
+            public void onDirectExportSuccess(String message) {
+                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onDirectExportFailure(Exception exception) {
                 exception.printStackTrace();
                 Toast.makeText(MainActivity.this, "Error occurred", Toast.LENGTH_SHORT).show();
             }
