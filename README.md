@@ -6,7 +6,7 @@ Easy to use library to import and export SQLite database of application
 ## Why this library?
 
 Google recently changed their privacy policy regarding write external storage permission in Android 11. So, now we have to use other methods for import export of our databases.
-This library does not use write external storage permission, it writes backup on external storage with intent ACTION_CREATE_DOCUMENT.
+This library does not use write external storage permission, it writes backup on external storage with intent ACTION_CREATE_DOCUMENT/MediaStore. It eleminates task of writing code for import export everytime you work on another project.
 
 ## How to use?
 
