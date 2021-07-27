@@ -1,6 +1,8 @@
 # SQLiteImportExportTool
 Easy to use library to import and export SQLite database of application
 
+[![](https://jitpack.io/v/ShashankMistry/SQLiteImportExportTool.svg)](https://jitpack.io/#ShashankMistry/SQLiteImportExportTool)
+
 ## Why this library?
 
 Google recently changed their privacy policy regarding write external storage permission in Android 11. So, now we have to use other methods for import export of our databases.
